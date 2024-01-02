@@ -47,7 +47,7 @@ void * nacitavanieF(void * arg) {
         bzero(buffer,256);
         printf("try2\n");
         n = read(spolData->newsocketfd, buffer, 255);
-        printf("tr3\n");
+        printf("tr3%d\n",n);
         if (n < 0)
         {
             printf("try\n");
@@ -57,16 +57,18 @@ void * nacitavanieF(void * arg) {
         }
 
         token = strtok(buffer, ";");
+        printf("zxc%s\n",token);
         temp[0] = atoi(token);
-        token = strtok(buffer, ";");
+        printf("zxc%d\n",temp[0]);
+        token = strtok(NULL, ";");
         temp[1] = atoi(token);
-        token = strtok(buffer, ";");
+        token = strtok(NULL, ";");
         temp[2] = atoi(token);
-        token = strtok(buffer, ";");
+        token = strtok(NULL, ";");
         temp[3] = atoi(token);
-        token = strtok(buffer, ";");
+        token = strtok(NULL, ";");
         temp[4] = atoi(token);
-        token = strtok(buffer, ";");
+        token = strtok(NULL, ";");
         temp[5] = atoi(token);
 
 
@@ -105,10 +107,11 @@ void * zapisF(void * arg) {
         pthread_mutex_lock(spolData->mut);
 
 
-        sprintf(buffer, "%d;%d;%d;%d;%d;%d\n",
+        sprintf(buffer, "%d;%d;%d;%d;%d;%d",
                 spolData->hrac1X, spolData->hrac1Y,
                 spolData->hrac2X, spolData->hrac2Y,
                 spolData->loptaX, spolData->loptaY);
+        printf("sprint%s\n", buffer);
 
 
         pthread_mutex_unlock(spolData->mut);
