@@ -1,0 +1,8 @@
+//
+// Created by Mario on 3. 1. 2024.
+//
+
+#ifndef SEMESTRALKA_POSKO_CLIENT_H
+#define SEMESTRALKA_POSKO_CLIENT_H
+
+#endif //SEMESTRALKA_POSKO_CLIENT_H
