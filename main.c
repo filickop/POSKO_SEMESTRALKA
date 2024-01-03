@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
     if (atoi(buff) == 1) {
 
         do{
-            printf("Vlozte cislo portu (1025-65535)\n");
+            printf("Vlozte cislo portu (1025-65535):\n");
             bzero(str,20);
             fgets(str,20, stdin);
             if(atoi(str) > 1025 && atoi(str) < 65535){
@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     else if(atoi(buff) == 2) {
 
         do{
-            printf("Vlozte cislo portu (1025-65535)\n");
+            printf("Vlozte cislo portu (1025-65535):\n");
             bzero(str,20);
             fgets(str,20, stdin);
             if(atoi(str) > 1025 && atoi(str) < 65535){
