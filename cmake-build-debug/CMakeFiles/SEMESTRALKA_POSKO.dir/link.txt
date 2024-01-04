@@ -1,1 +1,1 @@
-/usr/bin/cc -g CMakeFiles/SEMESTRALKA_POSKO.dir/main.c.o -o SEMESTRALKA_POSKO 
+/usr/bin/cc -g CMakeFiles/SEMESTRALKA_POSKO.dir/main.c.o -o SEMESTRALKA_POSKO  -lpthread -lcurses /usr/lib/x86_64-linux-gnu/libform.so 

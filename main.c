@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include <ncurses.h>
 #include "Server.c"
+#include "Client.c"
 
 int main(int argc, char *argv[])
 {
@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
         printf("3. Vypnutie\n");
         bzero(buff,10);
         fgets(buff,10, stdin);
-        if(atoi(buff) == 1 || atoi(buff) == 1) {
+        if(atoi(buff) == 1 || atoi(buff) == 2) {
             break;
         } else if(atoi(buff) == 3) {
             return 0;
@@ -49,6 +49,7 @@ int main(int argc, char *argv[])
             }
             printf("Zadali ste nespravne cislo portu\n");
         } while (1);
+        spustenieKlientaClient(str);
     }
 
 

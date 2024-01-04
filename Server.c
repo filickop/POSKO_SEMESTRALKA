@@ -1,4 +1,5 @@
 #include "Server.h"
+#include "SpolocneData.c"
 
 bool spustenieServera(char * str[]){
 
@@ -115,7 +116,7 @@ void * nacitavanieF(void * arg) {
     char buffer[256];
     char *token;
     while(spolData->quit == 0) {
-        usleep(1000000);
+        usleep(10000);
         //printf("%d;%d;%d;%d;%d;%d\n",
         //       spolData->hrac1X, spolData->hrac1Y,
         //       spolData->hrac2X, spolData->hrac2Y,
@@ -173,7 +174,7 @@ void * zapisF(void * arg) {
     char buffer[256];
 
     while(spolData->quit == 0) {
-        usleep(1000000);
+        usleep(10000);
         bzero(buffer, 256);
         pthread_mutex_lock(spolData->mut);
 
@@ -197,55 +198,4 @@ void * zapisF(void * arg) {
     }
     pthread_exit(NULL);
 
-}
-
-void * vykreslovanieF(void * arg) {
-    SPOL * spolData = arg;
-    curs_set(0);
-
-    // PLOCHA
-    mvprintw(0,0 , "----------------------------------------------------------------------------------------------------");
-    mvprintw(29,0 , "----------------------------------------------------------------------------------------------------");
-    for (int i = 0; i < 30; i++) {
-        mvprintw(i,0 , "I");
-        mvprintw(i,100 , "I");
-    }
-    // PLOCHA KONIEC
-
-    while (spolData->quit == 0) {
-        //clear();
-        for (int i = 1; i < 29; ++i) {
-            for (int j = 1; j < 99; ++j) {
-                mvaddch(i, j, ' ');
-            }
-        }
-
-        //lopta
-        mvaddch(spolData->objekty->loptaY, spolData->objekty->loptaX , '*');
-        //lopta koniec
-
-        //HRAC1
-        mvaddch(spolData->objekty->hrac1Y, spolData->objekty->hrac1X , '|');
-        mvaddch(spolData->objekty->hrac1Y +1, spolData->objekty->hrac1X , '|');
-        mvaddch(spolData->objekty->hrac1Y +2, spolData->objekty->hrac1X , '|');
-        mvaddch(spolData->objekty->hrac1Y +3, spolData->objekty->hrac1X , '|');
-        mvaddch(spolData->objekty->hrac1Y +4, spolData->objekty->hrac1X , '|');
-        //HRAC1 KONIEC
-
-        //HRAC2
-        mvaddch(spolData->objekty->hrac2Y, spolData->objekty->hrac2X , '|');
-        mvaddch(spolData->objekty->hrac2Y +1, spolData->objekty->hrac2X , '|');
-        mvaddch(spolData->objekty->hrac2Y +2, spolData->objekty->hrac2X , '|');
-        mvaddch(spolData->objekty->hrac2Y +3, spolData->objekty->hrac2X , '|');
-        mvaddch(spolData->objekty->hrac2Y +4, spolData->objekty->hrac2X , '|');
-        //HRAC2 KONIEC
-
-
-        //refresh();
-        //napms(100);
-        usleep(10000);
-    }
-
-
-    pthread_exit(NULL);
 }
