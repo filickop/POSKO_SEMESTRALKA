@@ -77,7 +77,7 @@ bool spustenieKlientaClient(char *str[]) {
 
     pthread_mutex_destroy(&mut);
 
-    close(sockfd);
+    close(spolData.newsocketfd);
 }
 
 void * hrac2F(void * arg) {
@@ -120,7 +120,7 @@ void * zapisFClient(void * arg) {
 
 
     while(spolData->quit == 0) {
-        usleep(10000);
+        usleep(1000);
         bzero(buffer, 256);
         pthread_mutex_lock(spolData->mut);
 

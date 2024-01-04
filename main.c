@@ -7,6 +7,7 @@
 
 int main(int argc, char *argv[])
 {
+    srand(time(NULL));
     char *buff[10];
     char *str[20];
      do{
@@ -51,7 +52,6 @@ int main(int argc, char *argv[])
         } while (1);
         spustenieKlientaClient(str);
     }
-
 
     return 0;
 }
