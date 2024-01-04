@@ -4,6 +4,8 @@ void * vykreslovanieF(void * arg) {
 
     SPOL * spolData = arg;
     curs_set(0);
+    char * body1[10];
+    char * body2[10];
 
     // PLOCHA
     mvprintw(0,0 , "----------------------------------------------------------------------------------------------------");
@@ -27,6 +29,12 @@ void * vykreslovanieF(void * arg) {
                 mvaddch(i, j, ' ');
             }
         }
+        //skore
+        sprintf(body1, "%d", spolData->bodyHracJeden);
+        sprintf(body2, "%d", spolData->bodyHracDva);
+        mvprintw(0,120 , body1);
+        mvprintw(1,120 , body2);
+        //skore koniec
 
         //lopta
         mvaddch(spolData->objekty->loptaY, spolData->objekty->loptaX , '*');
