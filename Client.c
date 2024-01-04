@@ -124,11 +124,11 @@ void * zapisFClient(void * arg) {
         bzero(buffer, 256);
         pthread_mutex_lock(spolData->mut);
 
-        sprintf(buffer, "%d;%d;%d;%d;%d;%d;%d;%d",
+        sprintf(buffer, "%d;%d;%d;%d;%d;%d;%d;%d;%d",
                 spolData->objekty->hrac1X, spolData->objekty->hrac1Y,
                 spolData->objekty->hrac2X, spolData->objekty->hrac2Y,
                 spolData->objekty->loptaX, spolData->objekty->loptaY,
-                spolData->bodyHracJeden, spolData->bodyHracDva);
+                spolData->bodyHracJeden, spolData->bodyHracDva,0);
         //printf("sprint%s\n", buffer);
 
         pthread_mutex_unlock(spolData->mut);
@@ -146,7 +146,7 @@ void * nacitavanieFClient(void * arg) {
 
     SPOL * spolData = arg;
     int n;
-    int temp[8];
+    int temp[9];
     char buffer[256];
     char *token;
     while(spolData->quit == 0) {
@@ -180,6 +180,8 @@ void * nacitavanieFClient(void * arg) {
         temp[6] = atoi(token);
         token = strtok(NULL, ";");
         temp[7] = atoi(token);
+        token = strtok(NULL, ";");
+        temp[8] = atoi(token);
 
         if(temp[3] != 0) {
             pthread_mutex_lock(spolData->mut);
