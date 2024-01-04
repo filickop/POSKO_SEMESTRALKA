@@ -118,6 +118,7 @@ void * zapisFClient(void * arg) {
     int n;
     char buffer[256];
 
+
     while(spolData->quit == 0) {
         usleep(10000);
         bzero(buffer, 256);
