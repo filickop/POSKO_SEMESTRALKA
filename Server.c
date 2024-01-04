@@ -28,6 +28,7 @@ bool spustenieServera(char * str[]){
     pthread_t zapis;
     pthread_t vykreslovanie;
     pthread_t hrac1;
+    pthread_t logika;
 
     int sockfd, newsockfd;
     socklen_t cli_len;
@@ -66,11 +67,13 @@ bool spustenieServera(char * str[]){
     pthread_create(&nacitavanie, NULL, nacitavanieF, &spolData);
     pthread_create(&zapis, NULL, zapisF, &spolData);
     pthread_create(&vykreslovanie, NULL, vykreslovanieF, &spolData);
+    pthread_create(&logika, NULL, logikaLopty, &spolData);
 
     pthread_join(hrac1, NULL);
     pthread_join(zapis, NULL);
     pthread_join(nacitavanie, NULL);
     pthread_join(vykreslovanie, NULL);
+    pthread_join(logika, NULL);
 
     pthread_mutex_destroy(&mut);
     close(spolData.newsocketfd);
@@ -116,7 +119,7 @@ void * nacitavanieF(void * arg) {
     char buffer[256];
     char *token;
     while(spolData->quit == 0) {
-        usleep(10000);
+        usleep(1000);
         //printf("%d;%d;%d;%d;%d;%d\n",
         //       spolData->hrac1X, spolData->hrac1Y,
         //       spolData->hrac2X, spolData->hrac2Y,
@@ -180,7 +183,7 @@ void * zapisF(void * arg) {
     char buffer[256];
 
     while(spolData->quit == 0) {
-        usleep(10000);
+        usleep(1000);
         bzero(buffer, 256);
         pthread_mutex_lock(spolData->mut);
 
@@ -205,4 +208,58 @@ void * zapisF(void * arg) {
     }
     pthread_exit(NULL);
 
+}
+
+void * logikaLopty(void * arg) {
+    SPOL * spolData = arg;
+    int skorovane;
+    int smerLoptyX;
+    int smerLoptyY;
+    int rychlost;
+    while (spolData->quit == 0) {
+        smerLoptyX = 1;
+        smerLoptyY = 1;
+        skorovane = 0;
+        rychlost = 200000;
+        pthread_mutex_lock(spolData->mut);
+
+        spolData->objekty->loptaX = 50;
+        spolData->objekty->loptaY = 25;
+
+        pthread_mutex_unlock(spolData->mut);
+        while (skorovane == 0 && spolData->quit == 0){
+
+            usleep(rychlost);
+            pthread_mutex_lock(spolData->mut);
+
+            spolData->objekty->loptaX += smerLoptyX;
+            spolData->objekty->loptaY += smerLoptyY;
+
+            pthread_mutex_unlock(spolData->mut);
+
+            if(spolData->objekty->loptaY >= 28 || spolData->objekty->loptaY <= 1) {
+                smerLoptyY = smerLoptyY * -1;
+            }
+            if((spolData->objekty->loptaX >= 98 && spolData->objekty->loptaY >= spolData->objekty->hrac2Y && spolData->objekty->loptaY <= spolData->objekty->hrac2Y + 4)
+            || (spolData->objekty->loptaX <= 2 && spolData->objekty->loptaY >= spolData->objekty->hrac1Y && spolData->objekty->loptaY <= spolData->objekty->hrac1Y + 4)) {
+                smerLoptyX = smerLoptyX * -1;
+                rychlost = rychlost * 0.8;
+            }
+            if(spolData->objekty->loptaX >= 99){
+                pthread_mutex_lock(spolData->mut);
+                spolData->bodyHracJeden++;
+                pthread_mutex_unlock(spolData->mut);
+                skorovane = 1;
+            }
+            if(spolData->objekty->loptaX <= 1){
+                pthread_mutex_lock(spolData->mut);
+                spolData->bodyHracDva++;
+                pthread_mutex_unlock(spolData->mut);
+                skorovane = 1;
+            }
+
+        }
+
+    }
+    pthread_exit(NULL);
 }

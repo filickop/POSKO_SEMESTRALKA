@@ -7,6 +7,7 @@ bool spustenieServera(char *str[]);
 void * hrac1F(void * arg);
 void * nacitavanieF(void * arg);
 void * zapisF(void * arg);
+void * logikaLopty(void * arg);
 
 
 
