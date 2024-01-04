@@ -71,11 +71,9 @@ bool spustenieKlientaClient(char *str[]) {
     pthread_join(hrac2, NULL);
     pthread_join(zapis, NULL);
     pthread_join(nacitavanie, NULL);
-    printf("1\n");
+    //printf("1\n");
     pthread_join(vykreslovanie, NULL);
 
-
-    //TODO VLAKNO NA VYKRESLOVANIE
 
     pthread_mutex_destroy(&mut);
 
@@ -125,10 +123,11 @@ void * zapisFClient(void * arg) {
         bzero(buffer, 256);
         pthread_mutex_lock(spolData->mut);
 
-        sprintf(buffer, "%d;%d;%d;%d;%d;%d",
+        sprintf(buffer, "%d;%d;%d;%d;%d;%d;%d;%d",
                 spolData->objekty->hrac1X, spolData->objekty->hrac1Y,
                 spolData->objekty->hrac2X, spolData->objekty->hrac2Y,
-                spolData->objekty->loptaX, spolData->objekty->loptaY);
+                spolData->objekty->loptaX, spolData->objekty->loptaY,
+                spolData->bodyHracJeden, spolData->bodyHracDva);
         //printf("sprint%s\n", buffer);
 
         pthread_mutex_unlock(spolData->mut);
@@ -146,7 +145,7 @@ void * nacitavanieFClient(void * arg) {
 
     SPOL * spolData = arg;
     int n;
-    int temp[6];
+    int temp[8];
     char buffer[256];
     char *token;
     while(spolData->quit == 0) {
@@ -176,6 +175,11 @@ void * nacitavanieFClient(void * arg) {
         token = strtok(NULL, ";");
         temp[5] = atoi(token);
 
+        token = strtok(NULL, ";");
+        temp[6] = atoi(token);
+        token = strtok(NULL, ";");
+        temp[7] = atoi(token);
+
         if(temp[3] != 0) {
             pthread_mutex_lock(spolData->mut);
 
@@ -185,6 +189,8 @@ void * nacitavanieFClient(void * arg) {
             //spolData->objekty->hrac2Y = temp[3];
             spolData->objekty->loptaX = temp[4];
             spolData->objekty->loptaY = temp[5];
+            spolData->bodyHracJeden = temp[6];
+            spolData->bodyHracDva = temp[7];
 
             pthread_mutex_unlock(spolData->mut);
 

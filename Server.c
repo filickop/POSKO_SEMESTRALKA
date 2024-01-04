@@ -112,7 +112,7 @@ void * hrac1F(void * arg) {
 void * nacitavanieF(void * arg) {
     SPOL * spolData = arg;
     int n;
-    int temp[6];
+    int temp[8];
     char buffer[256];
     char *token;
     while(spolData->quit == 0) {
@@ -142,6 +142,10 @@ void * nacitavanieF(void * arg) {
         temp[4] = atoi(token);
         token = strtok(NULL, ";");
         temp[5] = atoi(token);
+        token = strtok(NULL, ";");
+        temp[6] = atoi(token);
+        token = strtok(NULL, ";");
+        temp[7] = atoi(token);
 
 
         if(temp[3] != 0) {
@@ -153,6 +157,8 @@ void * nacitavanieF(void * arg) {
             spolData->objekty->hrac2Y = temp[3];
             //spolData->objekty->loptaX = temp[4];
             //spolData->objekty->loptaY = temp[5];
+            //spolData->bodyHracJeden = temp[6];
+            //spolData->bodyHracDva = temp[7];
 
             pthread_mutex_unlock(spolData->mut);
 
@@ -179,10 +185,11 @@ void * zapisF(void * arg) {
         pthread_mutex_lock(spolData->mut);
 
 
-        sprintf(buffer, "%d;%d;%d;%d;%d;%d",
+        sprintf(buffer, "%d;%d;%d;%d;%d;%d;%d;%d",
                 spolData->objekty->hrac1X, spolData->objekty->hrac1Y,
                 spolData->objekty->hrac2X, spolData->objekty->hrac2Y,
-                spolData->objekty->loptaX, spolData->objekty->loptaY);
+                spolData->objekty->loptaX, spolData->objekty->loptaY,
+                spolData->bodyHracJeden, spolData->bodyHracDva);
         //printf("sprint%s\n", buffer);
 
 

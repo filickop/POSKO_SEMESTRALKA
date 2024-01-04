@@ -1,22 +1,24 @@
 #include "SpolocneData.h"
 
 void * vykreslovanieF(void * arg) {
-    printf("2\n");
+
     SPOL * spolData = arg;
-    printf("3\n");
-    //curs_set(0);
-    printf("4\n");
+    curs_set(0);
 
     // PLOCHA
     mvprintw(0,0 , "----------------------------------------------------------------------------------------------------");
     mvprintw(29,0 , "----------------------------------------------------------------------------------------------------");
-    printf("5\n");
+
+    //skore
+    mvprintw(0,105 , "Skore hrac 1: ");
+    mvprintw(1,105 , "Skore hrac 2: ");
+    //skore
+
     for (int i = 0; i < 30; i++) {
         mvprintw(i,0 , "I");
         mvprintw(i,100 , "I");
     }
     // PLOCHA KONIEC
-    printf("6\n");
 
     while (spolData->quit == 0) {
         //clear();
@@ -46,12 +48,10 @@ void * vykreslovanieF(void * arg) {
         mvaddch(spolData->objekty->hrac2Y +4, spolData->objekty->hrac2X , '|');
         //HRAC2 KONIEC
 
-
         //refresh();
         //napms(100);
         usleep(1000);
     }
-
 
     pthread_exit(NULL);
 }
