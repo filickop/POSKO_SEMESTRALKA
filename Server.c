@@ -218,18 +218,19 @@ void * logikaLopty(void * arg) {
     int smerLoptyX;
     int smerLoptyY;
     int rychlost;
+
     while (spolData->quit == 0) {
-        if (rand()%1 == 1) {
-            smerLoptyX = 1;
-        }
-        else {
+        if (rand()%2 == 0) {
             smerLoptyX = -1;
         }
-        if (rand()%1 == 1) {
-            smerLoptyY = 1;
+        else {
+            smerLoptyX = 1;
+        }
+        if (rand()%2 == 0) {
+            smerLoptyY = -1;
         }
         else {
-            smerLoptyY = -1;
+            smerLoptyY = 1;
         }
 
         skorovane = 0;
@@ -237,7 +238,7 @@ void * logikaLopty(void * arg) {
         pthread_mutex_lock(spolData->mut);
 
         spolData->objekty->loptaX = 50;
-        spolData->objekty->loptaY = rand()%27;
+        spolData->objekty->loptaY = rand()%20 + 5;
 
 
         pthread_mutex_unlock(spolData->mut);

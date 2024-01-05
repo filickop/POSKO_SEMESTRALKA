@@ -30,6 +30,8 @@ void * vykreslovanieF(void * arg) {
             }
         }
         //skore
+        mvprintw(0,120 , "                   ");
+        mvprintw(0,120 , "                   ");
         sprintf(body1, "%d", spolData->bodyHracJeden);
         sprintf(body2, "%d", spolData->bodyHracDva);
         mvprintw(0,120 , body1);
